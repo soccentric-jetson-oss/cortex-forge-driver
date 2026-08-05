@@ -16,3 +16,9 @@ It is a standalone kernel module.
 
 - NVIDIA Jetson AGX Orin (Tegra234 SoC)
 - L4T kernel with NVDLA and PVA device tree nodes enabled
+
+## Version Requirements
+- GCC >= 9, Clang >= 10 (C/C++ projects)
+- Python >= 3.9 (Python projects)
+- CMake >= 3.20 (CMake projects)
+- Linux kernel >= 5.15 (kernel modules)

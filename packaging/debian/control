@@ -1,0 +1,5 @@
+Source: $(name)
+Section: kernel
+Priority: optional
+Maintainer: Sandesh <sandesh@soccentric.com>
+Build-Depends: debhelper-compat (= 13), linux-headers

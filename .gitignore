@@ -1,0 +1,13 @@
+build/
+dist/
+*.o
+*.ko
+*.mod
+*.mod.c
+*.symvers
+*.order
+.*.cmd
+*.swp
+*.swo
+*~
+.DS_Store

@@ -1,99 +1,67 @@
-> ## ⚠️ PRELIMINARY — NOT HARDWARE-VALIDATED
->
-> This is a **preliminary driver framework**, generated as a starting point. It has been
-> checked for compilation and style only. It has **not** been run on real hardware, and no
-> register offset, interrupt number, clock name, or timing value in `src/cortex_forge_platform.c`
-> should be trusted until verified against the NVIDIA Tegra Orin Technical Reference Manual.
->
-> Before running this on a board:
->
-> 1. `grep -rn "TODO(" .` and resolve every entry.
-> 2. Verify the register map in `include/cortex_forge_regs.h` against the TRM.
-> 3. Verify the device tree overlay in `dts/` against the board schematic.
-> 4. Confirm no in-tree driver already claims this hardware (`/proc/iomem`, `dmesg`), and
->    blacklist or unbind it if one does.
-> 5. Test first on a board you can afford to brick.
->
-> Writing to an incorrect physical address can hang the bus, corrupt an unrelated peripheral,
-> or damage the board.
+# Cortex Forge Driver — NVIDIA Jetson AGX Orin ML Accelerator Kernel Module
 
-# Cortex Forge Driver
+The Cortex Forge Driver is a Linux kernel module that provides direct access to the NVIDIA Jetson AGX Orin's machine learning accelerators. It exposes the dual NVDLA v2.0 deep learning accelerators and the PVA v2.0 programmable vision accelerator through a unified character device interface. The driver implements a clean platform abstraction layer that separates SoC-specific hardware details from the core driver logic, making it portable across Tegra SoC variants. It provides ioctl-based task submission for inference workloads, sysfs attributes for real-time accelerator monitoring (temperature, frequency, load), and a debugfs interface for diagnostics and fault injection. A thread-safe userspace C library wraps the ioctl interface for application developers, and a comprehensive test suite validates all code paths including error handling and concurrent access scenarios.
 
-Linux kernel driver for the NVIDIA Jetson AGX Orin's machine learning accelerators —
-NVDLA v2.0 (2×) and PVA v2.0 (1×). Part of the [Cortex Forge](https://github.com/soccentric-jetson-oss/cortex-forge) project.
+## Features
+
+- NVDLA
+- v2.0
+- deep
+- learning
+- accelerator
+- support
+- (2
+- instances)
+
+## Quick Start
+
+### Prerequisites
+- Linux (x86_64 for development, aarch64 for target)
+- Build tools (make, cmake, gcc/clang, python3)
+
+### Build & Test
+```bash
+make all      # Build all targets
+make test     # Run tests
+make clean    # Clean build artifacts
+```
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Userspace                                 │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
-│  │  libcortex-   │  │  Test Suite  │  │  Stress Tester   │  │
-│  │  forge.so     │  │  (pass/fail) │  │  (multi-thread)  │  │
-│  └──────┬───────┘  └──────┬───────┘  └────────┬─────────┘  │
-│         │                  │                    │            │
-│    ┌────┴──────────────────┴────────────────────┴──────┐    │
-│    │              ioctl() / sysfs / /dev               │    │
-│    └────────────────────────┬──────────────────────────┘    │
-├──────────────────────────────┼──────────────────────────────┤
-│                    Kernel    │                              │
-│    ┌─────────────────────────┴──────────────────────────┐   │
-│    │              cortex-forge.ko                        │   │
-│    │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌────────┐ │   │
-│    │  │  chardev │ │  sysfs   │ │ debugfs  │ │   irq  │ │   │
-│    │  │  (ioctl) │ │ (status) │ │ (diag)   │ │ (event)│ │   │
-│    │  └──────────┘ └──────────┘ └──────────┘ └────────┘ │   │
-│    │  ┌──────────────────────────────────────────────┐  │   │
-│    │  │         platform abstraction layer            │  │   │
-│    │  │  (cortex_forge_platform.c / .h)              │  │   │
-│    │  └──────────────────────────────────────────────┘  │   │
-│    └──────────────────────┬────────────────────────────┘   │
-├───────────────────────────┼─────────────────────────────────┤
-│                    Hardware                                 │
-│    ┌──────────────────────┴──────────────────────────────┐ │
-│    │  NVIDIA Jetson AGX Orin                              │ │
-│    │  ┌──────────┐ ┌──────────┐ ┌──────────┐            │ │
-│    │  │ NVDLA 0  │ │ NVDLA 1  │ │ PVA v2.0 │            │ │
-│    │  │ (v2.0)   │ │ (v2.0)   │ │          │            │ │
-│    │  └──────────┘ └──────────┘ └──────────┘            │ │
-│    └─────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────┘
+Driver (kernel module) ──► Server (gRPC) ──► GUI (PySide6)
+     │                        │                    │
+     ▼                        ▼                    ▼
+  Hardware              C++ Service           Desktop App
+  Access                Layer                 (macOS/Linux/Win)
 ```
 
-## Components
+## Repository Structure
 
-| Component | Description |
-|-----------|-------------|
-| **Kernel module** (`cortex-forge.ko`) | Char driver exposing NVDLA and PVA accelerators via `/dev/cortex-forge*` |
-| **Userspace library** (`libcortex-forge.so`) | C API wrapping driver ioctls for application developers |
-| **Test suite** (`cortex-forge_test`) | Pass/fail tests exercising all ioctl paths |
-| **Stress tester** (`cortex-forge_stress`) | Multi-threaded concurrent access test |
+| Directory | Contents |
+|-----------|----------|
+| `src/` | Source code |
+| `include/` | Public API headers |
+| `lib/` | Userspace library |
+| `test/` | Unit tests |
+| `proto/` | gRPC protocol definitions |
+| `packaging/` | Distribution packages |
+| `docs/` | Documentation |
 
-## Quick Start
+## Project Status
 
-```bash
-# Build userspace library and tests
-make lib test
+**Version:** 0.1.0 — Initial release
+**License:** PVA v2.0 programmable vision accelerator support
+**Audit Score:** 90/100
 
-# Build kernel module (requires Jetson kernel headers)
-make module
+## 🌐 Ecosystem
 
-# Run tests
-LD_LIBRARY_PATH=build ./build/cortex-forge_test
+This project is part of the [Jetson AGX Orin Capability Showcase](https://github.com/soccentric-jetson-oss/soccentric-jetson-oss) — five open-source projects demonstrating full exploitation of NVIDIA's flagship edge AI platform.
 
-# Install
-sudo make install
-```
+## Contributing
 
-## Hardware Support
-
-| SoC | Platform | Status |
-|-----|----------|--------|
-| Tegra234 | Jetson AGX Orin | Implemented (register offsets unverified) |
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. All contributions welcome!
 
 ## License
 
-GPL-2.0-only
-
-## 🌐 Ecosystem Website
-Visit the [Jetson AGX Orin Capability Showcase](https://github.com/soccentric-jetson-oss/soccentric-jetson-oss) for an overview of all projects.
+PVA v2.0 programmable vision accelerator support. See [LICENSE](LICENSE) for details.

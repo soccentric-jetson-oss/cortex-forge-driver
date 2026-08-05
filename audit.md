@@ -1,36 +1,40 @@
-# Audit Report — Cortex Forge Driver v0.1.0
+# Audit Report — cortex-forge-driver
 
-## Verification Results
+**Score: 75/100**
 
-| Check | Status | Notes |
-|-------|--------|-------|
-| Userspace library compile | ✅ PASS | gcc 12.2, x86_64, no warnings |
-| Test suite compile | ✅ PASS | gcc 12.2, x86_64 |
-| Test suite run | ✅ PASS | 1/1 tests pass (5 skipped: driver not loaded on x86_64) |
-| Stress test compile | ✅ PASS | gcc 12.2, x86_64 |
-| Kernel module compile | ⚠️ SKIP | No Jetson kernel headers in this environment |
-| clang-format | ⚠️ SKIP | clang-format not available |
-| checkpatch.pl | ⚠️ SKIP | No kernel tree available |
+## Scoring (20 criteria, 0-5 each)
 
-## Quality Score: 92/100
+| Category | Criterion | Score |
+|----------|-----------|-------|
+| Architecture & Design | 1.1 Modularity | 5/5 |
+| Architecture & Design | 1.2 API Design | 4/5 |
+| Architecture & Design | 1.3 Error Handling | 4/5 |
+| Architecture & Design | 1.4 Configuration | 2/5 |
+| Architecture & Design | 1.5 Extensibility | 4/5 |
+| Code Quality | 2.1 Readability | 4/5 |
+| Code Quality | 2.2 Documentation | 4/5 |
+| Code Quality | 2.3 Testing | 3/5 |
+| Code Quality | 2.4 Type Safety | 2/5 |
+| Code Quality | 2.5 Dependencies | 4/5 |
+| Security | 3.1 Input Validation | 3/5 |
+| Security | 3.2 Authentication | 2/5 |
+| Security | 3.3 Secure Defaults | 4/5 |
+| Build & Deployment | 4.1 Build System | 5/5 |
+| Build & Deployment | 4.2 CI/CD | 3/5 |
+| Build & Deployment | 4.3 Packaging | 4/5 |
+| Project Health | 5.1 Documentation | 5/5 |
+| Project Health | 5.2 Licensing | 5/5 |
+| Project Health | 5.3 Versioning | 4/5 |
+| Project Health | 5.4 Community | 4/5 |
 
-| Criterion | Score | Notes |
-|-----------|-------|-------|
-| Design & Implementation | 95 | Clean platform abstraction, devres usage, proper locking |
-| Code Quality | 90 | Kernel style, meaningful names, proper error handling |
-| Test Coverage | 88 | All ioctls tested, stress test for concurrency |
-| Test Meaningfulness | 90 | Tests exercise real paths, graceful skip when driver absent |
-| Extensibility | 95 | Platform ops table makes adding new SoCs trivial |
-| Maintainability | 92 | Well-documented, modular structure, consistent naming |
+**Total: 75/100**
 
-## Issues Found
+## Verdict: ⚠️ NEEDS IMPROVEMENT (70-89)
 
-1. Register offsets are stubs (TODO(HW)) — must be verified against TRM before hardware use
-2. IRQ handler is a stub — needs real hardware interrupt handling
-3. DMA support not implemented — needed for bulk data transfer
-4. No kernel module build verification (no Jetson kernel headers available)
+## Recommendations
 
-## Recommendation
+- Improve **1.4 Configuration** (currently 2/5)
+- Improve **2.4 Type Safety** (currently 2/5)
+- Improve **3.2 Authentication** (currently 2/5)
 
-PUSH with v0.1.0 tag. All critical paths compile and the test suite passes.
-Register map verification is a documented TODO for the next iteration.
+*Generated: 2026-08-05*

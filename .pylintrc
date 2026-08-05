@@ -1,0 +1,4 @@
+[MASTER]
+disable=C0111,C0103
+[MESSAGES CONTROL]
+enable=typecheck

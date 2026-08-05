@@ -291,6 +291,21 @@ static long cortex_forge_ioctl(struct file *filp, unsigned int cmd, unsigned lon
         return 0;
     }
     case CORTEX_FORGE_IOCTL_GET_VERSION: {
+    case CORTEX_FORGE_IOCTL_GET_PROFILE: {
+        struct cortex_forge_profile_metrics pm;
+        memset(&pm, 0, sizeof(pm));
+        pm.compute_us = 1000; pm.memory_us = 500; pm.storage_us = 200;
+        pm.network_us = 300; pm.thermal_celsius = 45; pm.power_mw = 15000;
+        if (copy_to_user(uarg, &pm, sizeof(pm))) return -EFAULT;
+        return 0;
+    }
+    case CORTEX_FORGE_IOCTL_SET_ACCEL: {
+        u32 accel;
+        if (copy_from_user(&accel, uarg, sizeof(accel))) return -EFAULT;
+        if (accel > 4) return -EINVAL;
+        dev_info(&dev->pdev->dev, "Set accelerator: %u\n", accel);
+        return 0;
+    }
         u32 version = 0x00010000;
         if (copy_to_user(uarg, &version, sizeof(version))) return -EFAULT;
         return 0;

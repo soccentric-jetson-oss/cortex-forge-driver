@@ -114,3 +114,21 @@ struct cortex_forge_accel_info {
 #define CORTEX_FORGE_IOCTL_GET_VERSION    _IOR(CORTEX_FORGE_MAGIC, 6, __u32)
 
 #endif /* CORTEX_FORGE_UAPI_H */
+
+/* GPU acceleration support */
+#define CORTEX_FORGE_ACCEL_GPU   3
+#define CORTEX_FORGE_ACCEL_AUTO  4
+
+/* Profiling metrics */
+struct cortex_forge_profile_metrics {
+    __u64 compute_us;
+    __u64 memory_us;
+    __u64 storage_us;
+    __u64 network_us;
+    __u32 thermal_celsius;
+    __u32 power_mw;
+    __u64 reserved[4];
+};
+
+#define CORTEX_FORGE_IOCTL_GET_PROFILE _IOR(CORTEX_FORGE_MAGIC, 7, struct cortex_forge_profile_metrics)
+#define CORTEX_FORGE_IOCTL_SET_ACCEL   _IOW(CORTEX_FORGE_MAGIC, 8, __u32)

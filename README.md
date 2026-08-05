@@ -12,6 +12,78 @@ The Cortex Forge Driver is a Linux kernel module that provides direct access to 
 - support
 - (2
 - instances)
+- PVA
+- v2.0
+- programmable
+- vision
+- accelerator
+- support
+- Unified
+- char
+- device
+- interface
+- (/dev/cortex-forge*)
+- ioctl-based
+- task
+- submission,
+- query,
+- and
+- cancellation
+- sysfs
+- attributes
+- for
+- accelerator
+- status
+- monitoring
+- debugfs
+- interface
+- for
+- diagnostics
+- and
+- fault
+- injection
+- Platform
+- abstraction
+- layer
+- for
+- SoC
+- portability
+- Thread-safe
+- userspace
+- C
+- library
+- (libcortex-forge)
+- Comprehensive
+- pass/fail
+- test
+- suite
+- Multi-threaded
+- stress
+- tester
+- for
+- concurrency
+- validation
+- devres-managed
+- resource
+- allocation
+- (no
+- leaks)
+- regmap-based
+- register
+- access
+- with
+- caching
+- Interrupt-driven
+- completion
+- notification
+- Concurrent
+- multi-process
+- access
+- support
+- GPL-2.0
+- licensed
+- open-source
+- code
 
 ## Quick Start
 
@@ -24,16 +96,6 @@ The Cortex Forge Driver is a Linux kernel module that provides direct access to 
 make all      # Build all targets
 make test     # Run tests
 make clean    # Clean build artifacts
-```
-
-## Architecture
-
-```
-Driver (kernel module) ──► Server (gRPC) ──► GUI (PySide6)
-     │                        │                    │
-     ▼                        ▼                    ▼
-  Hardware              C++ Service           Desktop App
-  Access                Layer                 (macOS/Linux/Win)
 ```
 
 ## Repository Structure
@@ -51,10 +113,10 @@ Driver (kernel module) ──► Server (gRPC) ──► GUI (PySide6)
 ## Project Status
 
 **Version:** 0.1.0 — Initial release
-**License:** PVA v2.0 programmable vision accelerator support
+**License:** GPL-2.0-only
 **Audit Score:** 90/100
 
-## 🌐 Ecosystem
+## Ecosystem
 
 This project is part of the [Jetson AGX Orin Capability Showcase](https://github.com/soccentric-jetson-oss/soccentric-jetson-oss) — five open-source projects demonstrating full exploitation of NVIDIA's flagship edge AI platform.
 
@@ -64,4 +126,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. All contributions welcome
 
 ## License
 
-PVA v2.0 programmable vision accelerator support. See [LICENSE](LICENSE) for details.
+GPL-2.0-only. See [LICENSE](LICENSE) for details.

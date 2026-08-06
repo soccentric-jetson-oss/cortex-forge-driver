@@ -1,9 +1,45 @@
 # SPDX-License-Identifier: GPL-2.0-only
-*.o *.ko *.mod *.mod.c *.mod.o *.symvers *.order *.a *.so *.so.*
-Module.symvers modules.order build/ dist/
-*.swp *.swo *~ .vscode/ .idea/
-*.cmd *.d *.tmp *.dtb *.dtbo *.scr *.map *.elf *.bin *.hex *.lst *.sym *.dump
-Module.markers modules.builtin modules.builtin.modinfo
+*.o
+*.ko
+*.mod
+*.mod.c
+*.mod.o
+*.symvers
+*.order
+*.a
+*.so
+*.so.*
+Module.symvers
+modules.order
+Module.markers
+modules.builtin
+modules.builtin.modinfo
+build/
+dist/
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.cmd
+*.d
+*.tmp
+*.dtb
+*.dtbo
+*.scr
+*.map
+*.elf
+*.bin
+*.hex
+*.lst
+*.sym
+*.dump
 docs/html/
-__pycache__/ *.pyc *.pyo *.egg-info/ .venv/
-.DS_Store Thumbs.db *.bak
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+.DS_Store
+Thumbs.db
+*.bak

@@ -63,3 +63,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. All contributions are wel
 ## License
 
 GPL-2.0-only. See [LICENSE](LICENSE) for details.
+
+---
+
+## Showcase
+
+This project is part of the [Jetson AGX Orin Capability Showcase](https://soccentric-jetson-oss.github.io/).

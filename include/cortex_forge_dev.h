@@ -9,18 +9,18 @@
 #ifndef CORTEX_FORGE_DEV_H
 #define CORTEX_FORGE_DEV_H
 
-#include <linux/platform_device.h>
+#include <linux/atomic.h>
 #include <linux/cdev.h>
+#include <linux/clk.h>
 #include <linux/device.h>
 #include <linux/mutex.h>
-#include <linux/spinlock.h>
-#include <linux/atomic.h>
-#include <linux/clk.h>
-#include <linux/reset.h>
+#include <linux/platform_device.h>
 #include <linux/regmap.h>
+#include <linux/reset.h>
+#include <linux/spinlock.h>
 
-#include "cortex_forge_task.h"
 #include "cortex_forge_accel.h"
+#include "cortex_forge_task.h"
 
 /**
  * struct cortex_forge_dev - Main driver device structure
@@ -42,29 +42,30 @@
  * @num_clks:     Number of clocks
  * @rst:          Reset control
  */
-struct cortex_forge_dev {
-    struct platform_device *pdev;
-    struct cdev cdev;
-    dev_t devt;
-    struct device *dev;
-    const struct class *class;
-    void __iomem *base;
-    struct regmap *regmap;
-    struct mutex dev_lock;
-    spinlock_t task_lock;
+struct cortex_forge_dev
+{
+    struct platform_device* pdev;
+    struct cdev             cdev;
+    dev_t                   devt;
+    struct device*          dev;
+    const struct class* class;
+    void __iomem*             base;
+    struct regmap*            regmap;
+    struct mutex              dev_lock;
+    spinlock_t                task_lock;
     struct cortex_forge_accel accelerators[NUM_ACCELERATORS];
-    struct cortex_forge_task tasks[MAX_TASKS];
-    struct list_head free_tasks;
-    atomic_t next_task_id;
-    int irq;
-    struct clk_bulk_data *clks;
-    int num_clks;
-    struct reset_control *rst;
+    struct cortex_forge_task  tasks[MAX_TASKS];
+    struct list_head          free_tasks;
+    atomic_t                  next_task_id;
+    int                       irq;
+    struct clk_bulk_data*     clks;
+    int                       num_clks;
+    struct reset_control*     rst;
 };
 
 /* ── Global device pointer (set during probe) ─────────────────────────── */
 
-extern struct cortex_forge_dev *g_dev;
+extern struct cortex_forge_dev* g_dev;
 
 /* ── Char device operations (defined in chardev.c) ──────────────────── */
 

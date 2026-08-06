@@ -10,35 +10,35 @@
  * @author Sandesh Ghimire
  */
 
-#include <linux/module.h>
-#include <linux/platform_device.h>
-#include <linux/of.h>
-#include <linux/fs.h>
 #include <linux/cdev.h>
-#include <linux/device.h>
-#include <linux/slab.h>
 #include <linux/clk.h>
-#include <linux/reset.h>
+#include <linux/device.h>
+#include <linux/fs.h>
+#include <linux/module.h>
+#include <linux/of.h>
+#include <linux/platform_device.h>
 #include <linux/pm_runtime.h>
 #include <linux/regmap.h>
+#include <linux/reset.h>
+#include <linux/slab.h>
 
 #include "cortex_forge_dev.h"
 #include "cortex_forge_uapi.h"
 
-#define DRV_NAME    "cortex-forge"
+#define DRV_NAME "cortex-forge"
 #define DRV_VERSION "0.1.0"
 
-struct cortex_forge_dev *g_dev;
+struct cortex_forge_dev* g_dev;
 
 static const struct class cortex_forge_class = {
-    .name  = DRV_NAME,
+    .name = DRV_NAME,
 };
 
-static int cortex_forge_probe(struct platform_device *pdev)
+static int cortex_forge_probe(struct platform_device* pdev)
 {
-    struct device *devp = &pdev->dev;
-    struct cortex_forge_dev *dev;
-    int ret;
+    struct device*           devp = &pdev->dev;
+    struct cortex_forge_dev* dev;
+    int                      ret;
 
     dev = devm_kzalloc(devp, sizeof(*dev), GFP_KERNEL);
     if (!dev)
@@ -89,15 +89,16 @@ static int cortex_forge_probe(struct platform_device *pdev)
 
     cdev_init(&dev->cdev, &cortex_forge_fops);
     dev->cdev.owner = THIS_MODULE;
-    ret = cdev_add(&dev->cdev, dev->devt, 1);
-    if (ret) {
+    ret             = cdev_add(&dev->cdev, dev->devt, 1);
+    if (ret)
+    {
         unregister_chrdev_region(dev->devt, 1);
         goto err_stop_workers;
     }
 
-    dev->dev = device_create(&cortex_forge_class, devp, dev->devt,
-                             dev, DRV_NAME "%u", 0);
-    if (IS_ERR(dev->dev)) {
+    dev->dev = device_create(&cortex_forge_class, devp, dev->devt, dev, DRV_NAME "%u", 0);
+    if (IS_ERR(dev->dev))
+    {
         cdev_del(&dev->cdev);
         unregister_chrdev_region(dev->devt, 1);
         ret = PTR_ERR(dev->dev);
@@ -112,9 +113,9 @@ err_stop_workers:
     return ret;
 }
 
-static void cortex_forge_remove(struct platform_device *pdev)
+static void cortex_forge_remove(struct platform_device* pdev)
 {
-    struct cortex_forge_dev *dev = platform_get_drvdata(pdev);
+    struct cortex_forge_dev* dev = platform_get_drvdata(pdev);
 
     device_destroy(&cortex_forge_class, dev->devt);
     cdev_del(&dev->cdev);
@@ -126,18 +127,17 @@ static void cortex_forge_remove(struct platform_device *pdev)
 /* ── Device tree match table ─────────────────────────────────────────── */
 
 static const struct of_device_id cortex_forge_of_match[] = {
-    { .compatible = "nvidia,tegra234-cortex-forge" },
-    {}
-};
+    {.compatible = "nvidia,tegra234-cortex-forge"}, {}};
 MODULE_DEVICE_TABLE(of, cortex_forge_of_match);
 
 static struct platform_driver cortex_forge_driver = {
     .probe  = cortex_forge_probe,
     .remove = cortex_forge_remove,
-    .driver = {
-        .name           = DRV_NAME,
-        .of_match_table = cortex_forge_of_match,
-    },
+    .driver =
+        {
+            .name           = DRV_NAME,
+            .of_match_table = cortex_forge_of_match,
+        },
 };
 
 /* ── Module init / exit ──────────────────────────────────────────────── */

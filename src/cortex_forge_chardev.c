@@ -12,44 +12,43 @@
  */
 
 #include <linux/fs.h>
-#include <linux/uaccess.h>
-#include <linux/slab.h>
 #include <linux/poll.h>
+#include <linux/slab.h>
+#include <linux/uaccess.h>
 
 #include "cortex_forge_platform.h"
 #include "cortex_forge_uapi.h"
 
 /* ── Read / Write (bulk data transfer) ───────────────────────────────────── */
 
-static ssize_t cortex_forge_read(struct file *filp, char __user *buf,
-				  size_t count, loff_t *f_pos)
+static ssize_t cortex_forge_read(struct file* filp, char __user* buf, size_t count, loff_t* f_pos)
 {
-	struct cortex_forge_dev *dev = filp->private_data;
-	ssize_t ret = 0;
+    struct cortex_forge_dev* dev = filp->private_data;
+    ssize_t                  ret = 0;
 
-	/* TODO(HW): Implement read for result data transfer */
-	return ret;
+    /* TODO(HW): Implement read for result data transfer */
+    return ret;
 }
 
-static ssize_t cortex_forge_write(struct file *filp, const char __user *buf,
-				   size_t count, loff_t *f_pos)
+static ssize_t cortex_forge_write(struct file* filp, const char __user* buf, size_t count,
+                                  loff_t* f_pos)
 {
-	struct cortex_forge_dev *dev = filp->private_data;
-	ssize_t ret = 0;
+    struct cortex_forge_dev* dev = filp->private_data;
+    ssize_t                  ret = 0;
 
-	/* TODO(HW): Implement write for input data transfer */
-	return ret;
+    /* TODO(HW): Implement write for input data transfer */
+    return ret;
 }
 
 /* ── Poll (event notification) ───────────────────────────────────────────── */
 
-static __poll_t cortex_forge_poll(struct file *filp, struct poll_table_struct *wait)
+static __poll_t cortex_forge_poll(struct file* filp, struct poll_table_struct* wait)
 {
-	struct cortex_forge_dev *dev = filp->private_data;
-	__poll_t mask = 0;
+    struct cortex_forge_dev* dev  = filp->private_data;
+    __poll_t                 mask = 0;
 
-	/* TODO(HW): Implement poll for task completion notification */
-	poll_wait(filp, NULL, wait);
+    /* TODO(HW): Implement poll for task completion notification */
+    poll_wait(filp, NULL, wait);
 
-	return mask;
+    return mask;
 }

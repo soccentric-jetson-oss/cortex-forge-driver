@@ -9,13 +9,13 @@
 #ifndef CORTEX_FORGE_ACCEL_H
 #define CORTEX_FORGE_ACCEL_H
 
-#include <linux/types.h>
-#include <linux/mutex.h>
-#include <linux/list.h>
-#include <linux/wait.h>
-#include <linux/kthread.h>
 #include <linux/atomic.h>
 #include <linux/device.h>
+#include <linux/kthread.h>
+#include <linux/list.h>
+#include <linux/mutex.h>
+#include <linux/types.h>
+#include <linux/wait.h>
 
 #include "cortex_forge_uapi.h"
 
@@ -48,23 +48,24 @@
  * @work_wait:     Wait queue for work notification
  * @running:       Atomic flag indicating thread should keep running
  */
-struct cortex_forge_accel {
-    u32 type;
-    char name[16];
-    u32 freq_hz;
-    s32 temp_celsius;
-    u32 load_percent;
-    u32 fw_version;
-    u32 hw_version;
-    u64 mem_total;
-    u64 mem_free;
-    u32 state;
-    struct mutex lock;
-    struct list_head task_queue;
-    struct list_head active_tasks;
-    struct task_struct *worker_thread;
-    wait_queue_head_t work_wait;
-    atomic_t running;
+struct cortex_forge_accel
+{
+    u32                 type;
+    char                name[16];
+    u32                 freq_hz;
+    s32                 temp_celsius;
+    u32                 load_percent;
+    u32                 fw_version;
+    u32                 hw_version;
+    u64                 mem_total;
+    u64                 mem_free;
+    u32                 state;
+    struct mutex        lock;
+    struct list_head    task_queue;
+    struct list_head    active_tasks;
+    struct task_struct* worker_thread;
+    wait_queue_head_t   work_wait;
+    atomic_t            running;
 };
 
 /* ── Accelerator management API ────────────────────────────────────────── */
@@ -75,7 +76,7 @@ struct cortex_forge_accel {
  * @type:  Accelerator type
  * @name:  Human-readable name
  */
-void accel_init(struct cortex_forge_accel *accel, u32 type, const char *name);
+void accel_init(struct cortex_forge_accel* accel, u32 type, const char* name);
 
 /**
  * accel_start_workers - Start worker threads for all accelerators
@@ -86,22 +87,20 @@ void accel_init(struct cortex_forge_accel *accel, u32 type, const char *name);
  * Returns: 0 on success, negative errno on failure.
  * On failure, any started workers are stopped.
  */
-int accel_start_workers(struct cortex_forge_accel *accelerators, int num,
-                        struct device *dev);
+int accel_start_workers(struct cortex_forge_accel* accelerators, int num, struct device* dev);
 
 /**
  * accel_stop_workers - Stop all accelerator worker threads
  * @accelerators: Array of accelerators
  * @num:          Number of accelerators in the array
  */
-void accel_stop_workers(struct cortex_forge_accel *accelerators, int num);
+void accel_stop_workers(struct cortex_forge_accel* accelerators, int num);
 
 /**
  * accel_get_info - Fill an accel_info struct from accelerator state
  * @accel: Source accelerator
  * @info:  Destination info struct (kernel-side, not yet copied to user)
  */
-void accel_get_info(struct cortex_forge_accel *accel,
-                    struct cortex_forge_accel_info *info);
+void accel_get_info(struct cortex_forge_accel* accel, struct cortex_forge_accel_info* info);
 
 #endif /* CORTEX_FORGE_ACCEL_H */

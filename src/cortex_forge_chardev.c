@@ -2,9 +2,9 @@
 /*
  * cortex_forge_chardev.c - Character device operations for Cortex Forge
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * Implements file_operations for /dev/cortex-forge*. The primary ioctl
  * dispatch lives in cortex_forge_main.c; this file provides the open/release

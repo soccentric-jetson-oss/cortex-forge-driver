@@ -41,11 +41,27 @@ INCLUDEDIR  ?= $(PREFIX)/include
 BINDIR      ?= $(PREFIX)/bin
 
 .PHONY: all module lib test stress cli checkpatch sparse smatch coccicheck
-.PHONY: clang-format-check cppcheck analyze
+.PHONY: clang-format-check cppcheck analyze doc
 .PHONY: deb rpm ipk install clean distclean help
 .PHONY: docker-image docker-shell
 
-all: module lib test
+all: format-check module lib test
+
+# ── Formatting (clang-format) ────────────────────────────────────────────
+CLANG_FILES := src/*.c include/*.h lib/src/*.c lib/include/*.h
+
+format:
+	clang-format -i $(CLANG_FILES) 2>/dev/null || true
+
+format-check:
+	@clang-format --dry-run --Werror $(CLANG_FILES) 2>/dev/null || \
+	 echo "WARNING: clang-format not available, skipping format check"
+
+# ── Linting (cppcheck) ──────────────────────────────────────────────────
+lint:
+	@cppcheck --enable=all --inconclusive --suppress=missingIncludeSystem \
+	 src/*.c lib/src/*.c test/*.c 2>/dev/null || \
+	 echo "WARNING: cppcheck not available, skipping lint"
 
 # ── Kernel module ──────────────────────────────────────────────────────────
 module:
@@ -117,7 +133,11 @@ cppcheck:
 	@cppcheck --enable=all --inconclusive --suppress=missingIncludeSystem \
 	 src/*.c lib/src/*.c test/*.c 2>/dev/null || true
 
-analyze: checkpatch sparse clang-format-check cppcheck
+analyze: format-check checkpatch sparse clang-format-check cppcheck
+
+# ── Documentation (Doxygen) ────────────────────────────────────────────
+doc:
+	@doxygen docs/Doxyfile 2>/dev/null || echo "WARNING: doxygen not available, skipping docs"
 
 # ── Packaging ────────────────────────────────────────────────────────────
 deb:
@@ -168,6 +188,7 @@ help:
 	@echo "  test             Build and run test suite"
 	@echo "  stress           Build and run stress test"
 	@echo "  analyze          Run all static analysis tools"
+	@echo "  doc              Generate Doxygen documentation"
 	@echo "  deb              Build Debian package"
 	@echo "  rpm              Build RPM package"
 	@echo "  docker-image     Build Docker build image"

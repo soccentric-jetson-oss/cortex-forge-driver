@@ -2,9 +2,9 @@
 /*
  * cortex_forge_irq.c - Interrupt handling for Cortex Forge driver
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * Hardirq handler acknowledges the interrupt and defers processing to
  * the threaded handler. The threaded handler updates task status and
@@ -16,6 +16,9 @@
 
 #include "cortex_forge_platform.h"
 #include "cortex_forge_uapi.h"
+#include "cortex_forge_dev.h"
+
+#define DRV_NAME "cortex-forge"
 
 /* ── Hardirq handler ─────────────────────────────────────────────────────── */
 

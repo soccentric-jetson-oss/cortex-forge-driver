@@ -2,9 +2,9 @@
 /*
  * cortex-forge_stress.c - Multi-threaded stress test for Cortex Forge driver
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * Spawns N threads that hammer the driver with concurrent task submissions,
  * queries, and cancellations. Designed to be run under lockdep, KASAN, and

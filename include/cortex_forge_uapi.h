@@ -2,9 +2,9 @@
 /*
  * cortex_forge_uapi.h - Userspace API definitions for Cortex Forge driver
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * Defines ioctl numbers and data structures shared between kernel and
  * userspace. All structs use fixed-width types and explicit padding for
@@ -113,8 +113,6 @@ struct cortex_forge_accel_info {
 #define CORTEX_FORGE_IOCTL_SET_POWER      _IOW(CORTEX_FORGE_MAGIC, 5, __u32)
 #define CORTEX_FORGE_IOCTL_GET_VERSION    _IOR(CORTEX_FORGE_MAGIC, 6, __u32)
 
-#endif /* CORTEX_FORGE_UAPI_H */
-
 /* GPU acceleration support */
 #define CORTEX_FORGE_ACCEL_GPU   3
 #define CORTEX_FORGE_ACCEL_AUTO  4
@@ -132,3 +130,5 @@ struct cortex_forge_profile_metrics {
 
 #define CORTEX_FORGE_IOCTL_GET_PROFILE _IOR(CORTEX_FORGE_MAGIC, 7, struct cortex_forge_profile_metrics)
 #define CORTEX_FORGE_IOCTL_SET_ACCEL   _IOW(CORTEX_FORGE_MAGIC, 8, __u32)
+
+#endif /* CORTEX_FORGE_UAPI_H */

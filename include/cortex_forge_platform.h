@@ -2,9 +2,9 @@
 /*
  * cortex_forge_platform.h - Platform abstraction seam for Cortex Forge driver
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * This header defines the hardware abstraction interface. Every SoC variant
  * supplies an ops table and soc_data through cortex_forge_platform.c.

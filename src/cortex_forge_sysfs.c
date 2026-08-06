@@ -2,9 +2,9 @@
 /*
  * cortex_forge_sysfs.c - sysfs attributes for Cortex Forge driver
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * Exposes accelerator status and configuration via sysfs. One value per file,
  * human-readable, with documented units.
@@ -15,6 +15,10 @@
 #include <linux/sysfs.h>
 
 #include "cortex_forge_platform.h"
+#include "cortex_forge_uapi.h"
+#include "cortex_forge_dev.h"
+
+#define DRV_NAME "cortex-forge"
 
 /* ── Accelerator attributes ──────────────────────────────────────────────── */
 

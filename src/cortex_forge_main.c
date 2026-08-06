@@ -291,6 +291,10 @@ static long cortex_forge_ioctl(struct file *filp, unsigned int cmd, unsigned lon
         return 0;
     }
     case CORTEX_FORGE_IOCTL_GET_VERSION: {
+        u32 version = 0x00010000;
+        if (copy_to_user(uarg, &version, sizeof(version))) return -EFAULT;
+        return 0;
+    }
     case CORTEX_FORGE_IOCTL_GET_PROFILE: {
         struct cortex_forge_profile_metrics pm;
         memset(&pm, 0, sizeof(pm));
@@ -304,10 +308,6 @@ static long cortex_forge_ioctl(struct file *filp, unsigned int cmd, unsigned lon
         if (copy_from_user(&accel, uarg, sizeof(accel))) return -EFAULT;
         if (accel > 4) return -EINVAL;
         dev_info(&dev->pdev->dev, "Set accelerator: %u\n", accel);
-        return 0;
-    }
-        u32 version = 0x00010000;
-        if (copy_to_user(uarg, &version, sizeof(version))) return -EFAULT;
         return 0;
     }
     default: return -ENOTTY;
@@ -425,7 +425,7 @@ static void __exit cortex_forge_exit(void)
 }
 
 module_init(cortex_forge_init); module_exit(cortex_forge_exit);
-MODULE_AUTHOR("Sandesh <sandesh@soccentric.com>");
+MODULE_AUTHOR("Sandesh Ghimire <sandesh@soccentric.com>");
 MODULE_DESCRIPTION("NVIDIA Jetson AGX Orin ML accelerator (NVDLA/PVA) driver");
 MODULE_LICENSE("GPL v2"); MODULE_VERSION(DRV_VERSION);
 MODULE_ALIAS("platform:" DRV_NAME);

@@ -8,12 +8,10 @@
 
 obj-m += cortex-forge.o
 
-cortex-forge-y := src/cortex_forge_main.o \
-                  src/cortex_forge_platform.o \
-                  src/cortex_forge_chardev.o \
-                  src/cortex_forge_sysfs.o \
-                  src/cortex_forge_debugfs.o \
-                  src/cortex_forge_irq.o
+cortex-forge-y := src/main.o \
+                  src/task_manager.o \
+                  src/accel_manager.o \
+                  src/chardev.o
 
 cortex-forge-$(CONFIG_CORTEX_FORGE_FAULT_INJECT) += src/cortex_forge_fault.o
 

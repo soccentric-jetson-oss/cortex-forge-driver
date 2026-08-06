@@ -2,9 +2,9 @@
 /*
  * libcortex_forge.h - Public API for Cortex Forge userspace library
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * Thread-safe C library wrapping the Cortex Forge kernel driver ioctl
  * interface. Provides task submission, status query, and accelerator

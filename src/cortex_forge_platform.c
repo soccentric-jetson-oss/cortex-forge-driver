@@ -2,9 +2,9 @@
 /*
  * cortex_forge_platform.c - Platform-specific data for Cortex Forge driver
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * Supplies SoC-specific ops tables and match data for supported platforms.
  * This is the only file that contains hardware-specific register offsets,
@@ -18,6 +18,10 @@
 
 #include "cortex_forge_platform.h"
 #include "cortex_forge_regs.h"
+#include "cortex_forge_uapi.h"
+#include "cortex_forge_dev.h"
+
+#define DRV_NAME "cortex-forge"
 
 /* ── Tegra234 (Jetson AGX Orin) register map ──────────────────────────────── */
 

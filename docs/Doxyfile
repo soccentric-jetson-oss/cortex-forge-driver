@@ -1,0 +1,90 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Doxyfile for cortex-forge-driver
+# Copyright (c) 2026 SoC Centric LLC
+# Author: Sandesh Ghimire
+#
+# Generates HTML documentation with full DOT integration including
+# call graphs, caller graphs, collaboration diagrams, and
+# dependency graphs for all C source files.
+
+PROJECT_NAME           = "Cortex Forge Driver"
+PROJECT_NUMBER         = 0.1.0
+PROJECT_BRIEF          = "NVIDIA Jetson AGX Orin ML accelerator (NVDLA/PVA) kernel driver"
+PROJECT_LOGO           =
+OUTPUT_DIRECTORY       = docs/html
+CREATE_SUBDIRS         = YES
+ALLOW_UNICODE_NAMES   = NO
+
+# ── Input ────────────────────────────────────────────────────────────────
+INPUT                  = include/ src/ lib/include/ lib/src/
+INPUT_ENCODING         = UTF-8
+FILE_PATTERNS          = *.c *.h
+RECURSIVE              = YES
+EXCLUDE                =
+EXCLUDE_SYMBOLS        =
+EXAMPLE_PATH           =
+
+# ── Extraction ────────────────────────────────────────────────────────────
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_ANON_NSPACES   = NO
+CASE_SENSE_NAMES       = YES
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = YES
+
+# ── HTML output ───────────────────────────────────────────────────────────
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 250
+HTML_DYNAMIC_SECTIONS  = YES
+HTML_INDEX_NUM_ENTRIES = 100
+
+# ── DOT integration ──────────────────────────────────────────────────────
+HAVE_DOT               = YES
+DOT_NUM_THREADS        = 4
+DOT_FONTNAME           = Helvetica
+DOT_FONTSIZE           = 10
+DOT_FONTPATH           =
+DOT_GRAPH_MAX_DEPTH    = 3
+DOT_IMAGE_FORMAT       = svg
+DOT_PATH               =
+DOTFILE_DIRS           =
+DOT_CLEANUP            = YES
+
+# ── Graph types ───────────────────────────────────────────────────────────
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+COLLABORATION_GRAPH    = YES
+GROUP_GRAPHS           = YES
+UML_LOOK               = YES
+UML_LIMIT_NUM_FIELDS   = 10
+TEMPLATE_RELATIONS     = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+DIRECTORY_GRAPH        = YES
+CLASS_DIAGRAMS         = YES
+CLASS_GRAPH            = YES
+DOT_TRANSPARENT        = YES
+DOT_MULTI_TARGETS      = YES
+MAX_DOT_GRAPH_DEPTH    = 3
+DOT_WRAP_THRESHOLD     = 5
+
+# ── Warnings ───────────────────────────────────────────────────────────────
+WARN_NO_PARAMDOC       = YES
+WARN_AS_ERROR          = YES
+WARN_FORMAT            = "$file:$line: $text"
+
+# ── Miscellaneous ─────────────────────────────────────────────────────────
+ALLEXTERNALS           = NO
+SHOW_USED_FILES        = YES
+SHOW_FILES             = YES
+SHOW_NAMESPACES        = YES
+SHOW_INCLUDE_FILES     = YES
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES

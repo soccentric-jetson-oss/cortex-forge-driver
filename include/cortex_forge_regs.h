@@ -2,9 +2,9 @@
 /*
  * cortex_forge_regs.h - Register offset definitions for Cortex Forge
  *
- * Copyright (C) 2026 SoC Centric
+ * Copyright (c) 2026 SoC Centric LLC
  *
- * Author: Sandesh <sandesh@soccentric.com>
+ * Author: Sandesh Ghimire
  *
  * Register offsets for NVIDIA Tegra Orin NVDLA v2.0 and PVA v2.0 blocks.
  * These are PLACEHOLDERS until verified against the L4T TRM.
@@ -64,12 +64,7 @@
 #define CORTEX_FORGE_PVA_STATUS_BUSY    BIT(1)
 #define CORTEX_FORGE_PVA_STATUS_ERROR   BIT(2)
 
-/* ── Helper ────────────────────────────────────────────────────────────────── */
-
-static inline bool cortex_forge_regs_unverified(const struct cortex_forge_regs *regs)
-{
-	return regs->ctrl == CORTEX_FORGE_REG_UNVERIFIED;
-}
+/* ── Register offset table ──────────────────────────────────────────────── */
 
 /**
  * struct cortex_forge_regs - Register offset table for one SoC variant
@@ -84,5 +79,12 @@ struct cortex_forge_regs {
 	u32 fw_status;
 	u32 perf_cnt;
 };
+
+/* ── Helper ────────────────────────────────────────────────────────────────── */
+
+static inline bool cortex_forge_regs_unverified(const struct cortex_forge_regs *regs)
+{
+	return regs->ctrl == CORTEX_FORGE_REG_UNVERIFIED;
+}
 
 #endif /* CORTEX_FORGE_REGS_H */

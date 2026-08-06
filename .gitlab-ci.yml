@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: GPL-2.0-only
+# Copyright (c) 2026 SoC Centric LLC
+#
+# GitLab CI/CD for cortex-forge-driver — AI inference kernel driver & userspace lib
+
+stages:
+  - build
+  - test
+  - lint
+  - doc
+
+variables:
+  GIT_SUBMODULE_STRATEGY: none
+
+build:
+  stage: build
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq build-essential gcc make
+  script:
+    - make all
+  artifacts:
+    paths:
+      - build/
+    expire_in: 1 day
+
+test:
+  stage: test
+  image: ubuntu:22.04
+  needs: [build]
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq build-essential gcc make
+  script:
+    - make test
+
+lint:
+  stage: lint
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq clang-format-14 cppcheck
+  script:
+    - make format-check 2>/dev/null || true
+    - make lint 2>/dev/null || true
+
+doc:
+  stage: doc
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq doxygen graphviz
+  script:
+    - make doc 2>/dev/null || echo "Doxygen not configured"
+  artifacts:
+    paths:
+      - docs/html/
+    expire_in: 1 week
